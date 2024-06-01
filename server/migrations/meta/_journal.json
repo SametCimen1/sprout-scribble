@@ -8,6 +8,13 @@
       "when": 1717207370280,
       "tag": "0000_small_johnny_storm",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1717216292537,
+      "tag": "0001_sharp_paper_doll",
+      "breakpoints": true
     }
   ]
 }

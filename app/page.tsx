@@ -1,10 +1,14 @@
 
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center bg-black text-slate-200">
+      <main className="">
         <p>Welcome to Next.js</p>
+        <Link href = 'api/auth/signin'><Button>Button</Button></Link>
       </main>
     );
 }
+
