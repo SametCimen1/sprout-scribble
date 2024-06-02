@@ -5,23 +5,29 @@ import {
     text,
     primaryKey,
     integer,
+    pgEnum,
   } from "drizzle-orm/pg-core"
 
   import { drizzle } from "drizzle-orm/postgres-js"
   import type { AdapterAccount } from "next-auth/adapters"
-   
-  const connectionString = "postgres://postgres:postgres@localhost:5432/drizzle"
+  import {createId} from '@paralleldrive/cuid2'
+  
+const connectionString = "postgres://postgres:postgres@localhost:5432/drizzle"
 
-
+export const RoleEnum = pgEnum('roles', ['user', 'admin'])
    
   export const users = pgTable("user", {
     id: text("id")
+      .notNull()
       .primaryKey()
-      .$defaultFn(() => crypto.randomUUID()),
+      .$defaultFn(() => createId()),
     name: text("name"),
     email: text("email").notNull(),
     emailVerified: timestamp("emailVerified", { mode: "date" }),
     image: text("image"),
+    password: text('password'),
+    twoFactorEnabled: boolean('twoFactorEnabled').default(false),
+    role: RoleEnum('roles').default('user')
   })
    
   export const accounts = pgTable(
@@ -48,3 +54,51 @@ import {
     })
   )
    
+
+
+
+  export const emailTokens = pgTable(
+    "email_tokens",
+    {
+      id: text("id").notNull().$defaultFn(() => createId()),
+      token: text("token").notNull(),
+      expires: timestamp("expires", { mode: "date" }).notNull(),
+      email: text('email').notNull()
+    },
+    (verficationToken) => ({
+      compositePk: primaryKey({
+        columns: [verficationToken.id, verficationToken.token],
+      }),
+    })
+  )
+
+
+export const passwordResetTokens = pgTable('password_reset_tokens', {
+    id: text("id").notNull().$defaultFn(() => createId()),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+    email: text('email').notNull()  
+  },
+    (verficationToken) => ({
+      compositePk: primaryKey({
+        columns: [verficationToken.id, verficationToken.token],
+      }),
+    })
+)
+
+
+
+
+export const twoFactorTokens = pgTable('two_factor_tokens', {
+  id: text("id").notNull().$defaultFn(() => createId()),
+  token: text("token").notNull(),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+  email: text('email').notNull()  
+},
+  (verficationToken) => ({
+    compositePk: primaryKey({
+      columns: [verficationToken.id, verficationToken.token],
+    }),
+  })
+)
+

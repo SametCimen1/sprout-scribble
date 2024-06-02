@@ -4,25 +4,26 @@ import { Form, FormField, FormLabel,FormControl, FormItem, FormDescription, Form
 import { AuthCard } from "./auth-card";
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {LoginSchema} from '@/types/login-schema'
+
 import * as z from 'zod';
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { emailSignin } from "@/server/actions/email-signin";
+
 import {useAction} from 'next-safe-action/hooks'
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { FormSuccess } from "./form-sucess";
 import { FormError } from "./form-error";
+import { NewPasswordSchema } from "@/types/new-password-schema";
+import { newPassword } from "@/server/actions/new-password";
 
 
-export const LoginForm = () => {
+export const NewPasswordForm = () => {
 
-    const form = useForm({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof NewPasswordSchema>>({
+        resolver: zodResolver(NewPasswordSchema),
         defaultValues:{
-            email:"",
             password:""
         }
     });
@@ -30,43 +31,28 @@ export const LoginForm = () => {
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
 
-    const {execute, status, result} =  useAction(emailSignin, {
+    const {execute, status, result} =  useAction(newPassword, {
         onSuccess(data){
             if(data?.error) setError(data.error);
             if(data?.success) setSuccess(data.success);
         }
     })
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
         execute(values);
     }
 
     return(
         <AuthCard 
-            cardTitle="Welcome Back!"
-            backButtonHref="/auth/register"
-            backButtonLabel="create a new account"
+            cardTitle="Enter a new password"
+            backButtonHref="/auth/login"
+            backButtonLabel="Back to login"
             showSocials
         >
             <div>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div>
-                            <FormLabel>Email</FormLabel>
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({field}) => (
-                                <FormItem>
-                                    <FormLabel />
-                                    <FormControl>
-                                        <Input {...field} placeholder="user@gmail.com" type='email' autoComplete="email"/>
-                                    </FormControl>
-                                    <FormDescription />
-                                    <FormMessage />
-                                </FormItem>
-                                )}
-                            />
 
                             <FormLabel>Password</FormLabel>
                             <FormField
@@ -76,7 +62,7 @@ export const LoginForm = () => {
                                 <FormItem>
                                     <FormLabel />
                                     <FormControl>
-                                        <Input {...field} placeholder="**********" type='password' autoComplete="current-password"/>
+                                        <Input {...field} placeholder="**********" disabled={status === 'executing'} type='password' autoComplete="current-password"/>
                                     </FormControl>
                                     <FormDescription />
                                     <FormMessage />
@@ -94,7 +80,7 @@ export const LoginForm = () => {
                         </div>
 
                         <Button type ='submit' className={cn('w-full', status === 'executing' ? 'animate-pulse' : "")}>
-                            {"Login"}
+                            {"Reset Password"}
                         </Button>
 
                     </form>
