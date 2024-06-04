@@ -6,6 +6,8 @@ import {
     primaryKey,
     integer,
     pgEnum,
+    serial,
+    real,
   } from "drizzle-orm/pg-core"
 
   import { drizzle } from "drizzle-orm/postgres-js"
@@ -93,7 +95,8 @@ export const twoFactorTokens = pgTable('two_factor_tokens', {
   id: text("id").notNull().$defaultFn(() => createId()),
   token: text("token").notNull(),
   expires: timestamp("expires", { mode: "date" }).notNull(),
-  email: text('email').notNull()  
+  email: text('email').notNull(),
+  userID: text("userID").references(() => users.id, {onDelete: "cascade"})
 },
   (verficationToken) => ({
     compositePk: primaryKey({
@@ -102,3 +105,11 @@ export const twoFactorTokens = pgTable('two_factor_tokens', {
   })
 )
 
+
+export const products = pgTable('products', {
+  id: serial('id').primaryKey(),
+  description: text('description').notNull(),
+  title: text('text').notNull(),
+  created: timestamp("created").defaultNow(),
+  price: real('price').notNull()
+})

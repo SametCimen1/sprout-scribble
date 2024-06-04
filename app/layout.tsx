@@ -4,6 +4,10 @@ import "./globals.css";
 
 import Nav from "@/components/navigation/nav";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/providers/theme-provider"
+import Toaster from "@/components/ui/toaster";
+
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +22,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={cn("px-6 md:px-12 max-w-7xl mx-auto ", `${inter.className}`)}>
-          <Nav />
-          {children}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+            <Nav />
+            <Toaster />
+            {children}
+          </ThemeProvider>
       </body>
     </html>
   );

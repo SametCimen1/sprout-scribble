@@ -17,6 +17,7 @@ import { FormSuccess } from "./form-sucess";
 import { FormError } from "./form-error";
 import { NewPasswordSchema } from "@/types/new-password-schema";
 import { newPassword } from "@/server/actions/new-password";
+import { useSearchParams } from "next/navigation";
 
 
 export const NewPasswordForm = () => {
@@ -27,9 +28,10 @@ export const NewPasswordForm = () => {
             password:""
         }
     });
-
-    const [error, setError] = useState("")
-    const [success, setSuccess] = useState("")
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     const {execute, status, result} =  useAction(newPassword, {
         onSuccess(data){
@@ -39,7 +41,7 @@ export const NewPasswordForm = () => {
     })
 
     const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-        execute(values);
+        execute({password: values.password, token});
     }
 
     return(

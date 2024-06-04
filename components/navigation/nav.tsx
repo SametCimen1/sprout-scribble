@@ -12,9 +12,11 @@ export default async function Nav(){
         return(
             <header className=' py-8'>
                 <nav className=''>
-                    <ul className='flex  justify-between'>
+                    <ul className='flex  justify-between items-center'>
                         <li>
-                            <Link href='/'><Logo/></Link>
+                            <Link href='/' aria-label='sprout and scribble logo'>
+                                <Logo/>
+                            </Link>
                         </li>
                         {!session ? (
                             <li>

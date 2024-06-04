@@ -57,6 +57,20 @@
       "when": 1717350312433,
       "tag": "0007_light_forge",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1717451581337,
+      "tag": "0008_chief_captain_britain",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1717465634857,
+      "tag": "0009_condemned_living_mummy",
+      "breakpoints": true
     }
   ]
 }
