@@ -26,8 +26,10 @@ import Tiptap from './tiptap';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'next-safe-action/hooks';
 import { createProduct } from '@/server/actions/create-product';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {toast} from 'sonner'
+import { getProduct } from '@/server/actions/get-product';
+import { useEffect } from 'react';
 
 export default function ProductForm(){
     const form = useForm<zProductSchema>({
@@ -41,6 +43,34 @@ export default function ProductForm(){
     })
 
     const router = useRouter()
+    const searchParams = useSearchParams();
+    const editMode = searchParams.get('id') 
+
+    const checkedProduct = async (id: number) => {
+        if(editMode){
+            const data = await getProduct(id);
+            if(data.error){
+                toast.error(data.error);
+                router.push('/dashboard/products')
+                return;
+            }
+            if(data.success){
+                const id = parseInt(editMode);
+                form.setValue('title', data.success.title);
+                form.setValue('description', data.success.description);
+                form.setValue('price', data.success.price);
+                form.setValue('id', id);
+            }
+        }
+    }
+
+    useEffect(() => {
+        if(editMode){
+            checkedProduct(parseInt(editMode))
+        }
+    },[])
+
+    
 
     const {execute, status} = useAction(createProduct, {
         onSuccess: (data) => {
