@@ -70,7 +70,7 @@ export default function ProductForm(){
         }
     },[])
 
-    
+
 
     const {execute, status} = useAction(createProduct, {
         onSuccess: (data) => {
@@ -83,7 +83,12 @@ export default function ProductForm(){
             }
         },
         onExecute: () => {
-            toast.loading("creating product")
+            if(editMode){
+                toast.loading("Editing product")
+            }
+            if(!editMode){
+                toast.loading("Creating product")
+            }
         },
         onError: (error)  => {
             console.log(error)
@@ -97,8 +102,12 @@ export default function ProductForm(){
     return(
         <Card>
             <CardHeader>
-                <CardTitle>Card Title</CardTitle>
-                <CardDescription>Card Description</CardDescription>
+                <CardTitle>
+                    {editMode ? 'Edit Product' : 'Create Product'}
+                </CardTitle>
+                <CardDescription>
+                    {editMode ? 'Make changes to existing product' : 'Add a brand new product'}
+                </CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
@@ -145,7 +154,7 @@ export default function ProductForm(){
                             </FormItem>
                         )}
                         />                        
-                        <Button disabled={status === 'executing' || !form.formState.isValid || !form.formState.isDirty} className='w-full' type="submit">Submit</Button>
+                        <Button disabled={status === 'executing' || !form.formState.isValid || !form.formState.isDirty} className='w-full' type="submit">{editMode ? "Save Changes" : "Create Product"}</Button>
                     </form>
                 </Form>
             </CardContent>
