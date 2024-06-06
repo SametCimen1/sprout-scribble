@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Roboto} from "next/font/google";
 import "./globals.css";
 
 import Nav from "@/components/navigation/nav";
@@ -9,7 +9,10 @@ import Toaster from "@/components/ui/toaster";
 
 
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  weight: ['400', '500', '700', '900'],
+  subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,16 +26,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("px-6 md:px-12 max-w-7xl mx-auto ", `${inter.className}`)}>
+      <body className={roboto.className}>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
               enableSystem
               disableTransitionOnChange
             >
-            <Nav />
-            <Toaster />
-            {children}
+            <div className="flex-grow px-6 md:px-12 mx-auto max-w-6xl">
+              <Nav />
+              <Toaster />
+              {children}
+            </div>
           </ThemeProvider>
       </body>
     </html>

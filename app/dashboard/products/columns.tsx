@@ -24,7 +24,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
   } from "@/components/ui/tooltip"
-import ProductVariant from "./product-variant"
+import {ProductVariant} from "./product-variant"
 
 type ProductColumn = {
     title: string,
@@ -49,32 +49,35 @@ const ActionCell = ({ row }: { row: Row<ProductColumn> }) => {
             toast.loading("Deleting Product")
         },
     })
-    
+
     const product = row.original;
 
-    return(
+    console.log('product')
+    console.log(product)
+
+    return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant={'ghost'} className="h-8 w-8 p-0" >
-                    <MoreHorizontal className="h-4 w-4"  />
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuItem  className="dark:focus:bg-primary focus:bg-primary/50 cursor-pointer">
-                    <Link href = {`/dashboard/add-product?id=${product.id}`}> 
-                        Edit Product
-                    </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                    onClick = {() => execute({id: product.id})} 
-                    className="dark:focus:bg-destructive focus:bg-destructive/50 cursor-pointer"
-                >
-                    Delete Product
-                </DropdownMenuItem>
-            </DropdownMenuContent>
+          <DropdownMenuTrigger asChild>
+            <Button variant={"ghost"} className="h-8 w-8 p-0">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem className="dark:focus:bg-primary focus:bg-primary/50 cursor-pointer">
+              <Link href={`/dashboard/add-product?id=${product.id}`}>
+                Edit Product
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => execute({ id: product.id })}
+              className="dark:focus:bg-destructive focus:bg-destructive/50 cursor-pointer"
+            >
+              Delete Product
+            </DropdownMenuItem>
+          </DropdownMenuContent>
         </DropdownMenu>
-    )
-}
+      )
+    }
 
 export const columns: ColumnDef<ProductColumn>[] = [
     {
@@ -87,50 +90,55 @@ export const columns: ColumnDef<ProductColumn>[] = [
     },
     {
         accessorKey: "variants",
-        header:"Variants",
-        cell: ({row}) => {
-            const variants = row.getValue('variants') as VariantsWithImagesTags[];
-            return(
-                <div className="">
-                    {variants.map((variant) => (
-                        <div key = {variant.id}>
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <ProductVariant
-                                            productID={variant.productID}
-                                            variant={variant}
-                                            editMode={true}
-                                        >
-                                            <div className = "w-5 h-5 rounded-full" key = {variant.id} style = {{background: variant.color}} />
-                                        </ProductVariant>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p>{variant.productType}</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-                        </div>
-                    ))}
-
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <span>
-                                    <ProductVariant  editMode = {false}>
-                                        <PlusCircle className="h-5 w-5"/>
-                                    </ProductVariant>
-                                </span>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>Create a new product variant</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+        header: "Variants",
+        cell: ({ row }) => {
+          const variants = row.getValue("variants") as VariantsWithImagesTags[]
+            console.log("VARIANTS RETURNED")
+            console.log(variants)
+          return (
+            <div className="flex gap-2">
+              {variants.map((variant) => (
+                <div key={variant.id}>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <ProductVariant
+                          productID={variant.productID}
+                          variant={variant}
+                          editMode={true}
+                        >
+                          <div
+                            className="w-5 h-5 rounded-full"
+                            key={variant.id}
+                            style={{ background: variant.color }}
+                          />
+                        </ProductVariant>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{variant.productType}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
-            )
+              ))}
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span>
+                      <ProductVariant productID={row.original.id} editMode={false}>
+                        <PlusCircle className="h-5 w-5" />
+                      </ProductVariant>
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Create a new product variant</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )
         },
-    },
+      },
     {
         accessorKey: "price",
         header:"Price",
@@ -138,7 +146,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
             const price = parseFloat(row.getValue('price'));
             const formatted= new Intl.NumberFormat('en-US',{
                 currency: "USD",
-                style: "currency"  
+                style: "currency"
             }).format(price);
             return (
                 <div className="font-medium text-xs">{formatted}</div>
@@ -153,11 +161,11 @@ export const columns: ColumnDef<ProductColumn>[] = [
             const cellTitle = row.getValue('title') as string;
             return (
                 <div className="">
-                    <Image 
-                        className="rounded-md" 
-                        src = {image} 
-                        alt = {cellTitle} 
-                        width={50} 
+                    <Image
+                        className="rounded-md"
+                        src = {image}
+                        alt = {cellTitle}
+                        width={50}
                         height={50}
                     />
                 </div>
@@ -169,4 +177,4 @@ export const columns: ColumnDef<ProductColumn>[] = [
         header: "Actions",
         cell: ActionCell,
     },
-]   
+]

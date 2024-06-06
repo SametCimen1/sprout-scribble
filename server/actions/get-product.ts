@@ -11,9 +11,12 @@ export async function getProduct(id:number){
             where: eq(products.id, id)
         });
 
+        console.log("DB PRODUCT RETURNING")
+        console.log(product)
+
         if(!product) throw new Error("product not found");
         return {success: product}
-   
+
     } catch (error) {
         return {error: "failed to get the product"}
     }
