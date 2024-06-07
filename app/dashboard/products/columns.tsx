@@ -46,7 +46,7 @@ const ActionCell = ({ row }: { row: Row<ProductColumn> }) => {
             }
         },
         onExecute: () => {
-            toast.loading("Deleting Product")
+            toast.loading("Deleting Product", {duration: 500})
         },
     })
 

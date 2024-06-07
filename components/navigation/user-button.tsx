@@ -17,8 +17,8 @@ import { LogOut, Moon, Settings, Sun, TruckIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Switch } from "../ui/switch";
 import { useRouter } from "next/navigation";
-  
-  
+
+
 export const UserButton = ({user}: Session) => {
     const router = useRouter();
     const {theme, setTheme} = useTheme();
@@ -31,7 +31,7 @@ export const UserButton = ({user}: Session) => {
             case "light":
                 return setChecked(false);
             case " system":
-                return setChecked(false);    
+                return setChecked(false);
         }
     }
 
@@ -39,16 +39,16 @@ export const UserButton = ({user}: Session) => {
         return(
             <DropdownMenu modal={false}>
                 <DropdownMenuTrigger>
-                    <Avatar>
-                            {(user.image && user.name) && ( 
+                    <Avatar className="w-8 h-8">
+                            {(user.image && user.name) && (
 
-                                    <Image 
+                                    <Image
                                         src = {user.image}
                                         alt = {user.name}
                                         fill = {true}
-                                    />           
-            
-                             )             
+                                    />
+
+                             )
                             }
                             {!user.image &&
                                 <AvatarFallback>
@@ -61,15 +61,15 @@ export const UserButton = ({user}: Session) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-64 p-6" align="end">
                     <div className="mb-4 p-4 flex flex-col items-center rounded-lg bg-primary/10">
-                        {(user.image && user.name) && ( 
-                                <Image 
+                        {(user.image && user.name) && (
+                                <Image
                                     className="rounded-full"
                                     src = {user.image}
                                     alt = {user.name}
                                     width={36}
                                     height={36}
-                                />           
-                                )             
+                                />
+                                )
                         }
                         <p className="font-bold text-xs">{user.name}</p>
                         <span className="text-xs font-medium text-secondary-foreground">{user.email}</span>
@@ -98,7 +98,7 @@ export const UserButton = ({user}: Session) => {
                         </DropdownMenuItem>
                     )}
                     <DropdownMenuItem  className=" group py-2 font-medium cursor-pointer transition-all duration-500 focus:bg-destructive/30" onClick = {() => signOut()}>
-                       <LogOut size = {14} className="mr-3 group-hover:scale-75 transition-all duration-300 ease-in-out"/>Sign Out 
+                       <LogOut size = {14} className="mr-3 group-hover:scale-75 transition-all duration-300 ease-in-out"/>Sign Out
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
