@@ -44,7 +44,7 @@ export default function ProductForm(){
 
     const router = useRouter()
     const searchParams = useSearchParams();
-    const editMode = searchParams.get('id') 
+    const editMode = searchParams.get('id')
 
     const checkedProduct = async (id: number) => {
         if(editMode){
@@ -137,7 +137,7 @@ export default function ProductForm(){
                             <FormMessage />
                             </FormItem>
                         )}
-                        /> 
+                        />
                         <FormField
                         control={form.control}
                         name="price"
@@ -146,21 +146,18 @@ export default function ProductForm(){
                             <FormLabel>Product Price</FormLabel>
                             <FormControl>
                                 <div className='flex items-center gap-2'>
-                                    <DollarSign size={36} className='p-2 bg-muted rounded-md'/> 
+                                    <DollarSign size={36} className='p-2 bg-muted rounded-md'/>
                                     <Input {...field} type ="number" placeholder = "Your price in USD" step = "0.1" min={0}/>
                                 </div>
                             </FormControl>
                             <FormMessage />
                             </FormItem>
                         )}
-                        />                        
+                        />
                         <Button disabled={status === 'executing' || !form.formState.isValid || !form.formState.isDirty} className='w-full' type="submit">{editMode ? "Save Changes" : "Create Product"}</Button>
                     </form>
                 </Form>
             </CardContent>
-            <CardFooter>
-                <p>Card Footer</p>
-            </CardFooter>
         </Card>
 
     )

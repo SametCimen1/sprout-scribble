@@ -2,7 +2,7 @@
 
 export default function Logo(){
     return(
-        <svg width="212" height="89" viewBox="0 0 212 89" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+        <svg className="w-full" width="212" height="89" viewBox="0 0 212 89" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <rect width="212" height="89" fill="url(#pattern0)"/>
             <defs>
             <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">

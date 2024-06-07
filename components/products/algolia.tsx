@@ -94,6 +94,7 @@ export default function Algolia() {
             form: "relative mb-4",
             resetIcon: "hidden",
           }}
+          placeholder={"Search for a product"}
         />
         <AnimatePresence>
           {active && (

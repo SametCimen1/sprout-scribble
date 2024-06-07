@@ -11,6 +11,7 @@ const config = withUt({
 	],
   prefix: "",
   theme: {
+
     container: {
       center: true,
       padding: "2rem",
@@ -27,6 +28,9 @@ const config = withUt({
       },
       height:{
         "88": "22rem"
+      },
+      screens:{
+        "xsm":"400px"
       },
       colors: {
         border: "hsl(var(--border))",
