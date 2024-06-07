@@ -31,7 +31,8 @@ export const RoleEnum = pgEnum('roles', ['user', 'admin'])
     image: text("image"),
     password: text('password'),
     twoFactorEnabled: boolean('twoFactorEnabled').default(false),
-    role: RoleEnum('roles').default('user')
+    role: RoleEnum('roles').default('user'),
+    customerID: text('customerID')
   })
 
   export const accounts = pgTable(
@@ -227,7 +228,8 @@ export const orders = pgTable('orders', {
   total: real("total").notNull(),
   status: text('status').notNull(),
   created: timestamp('created').defaultNow(),
-  receiptURL: text("receiptURL")
+  receiptURL: text("receiptURL"),
+  paymentIntentID: text("paymentIntentID"),
 })
 
 export const ordersRelations = relations(orders, ({ one, many }) => ({
@@ -249,4 +251,26 @@ export const orderProduct = pgTable("orderProduct", {
   productID: serial("productID")
     .notNull()
     .references(() => products.id, { onDelete: "cascade" }),
+  orderID: serial("orderID")
+    .notNull()
+    .references(() => orders.id, { onDelete: "cascade" }),
 })
+
+
+export const orderProductRelations = relations(orderProduct, ({ one }) => ({
+  order: one(orders, {
+    fields: [orderProduct.orderID],
+    references: [orders.id],
+    relationName: "orderProduct",
+  }),
+  product: one(products, {
+    fields: [orderProduct.productID],
+    references: [products.id],
+    relationName: "products",
+  }),
+  productVariants: one(productVariants, {
+    fields: [orderProduct.productVariantID],
+    references: [productVariants.id],
+    relationName: "productVariants",
+  }),
+}))

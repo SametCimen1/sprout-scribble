@@ -17,11 +17,12 @@ export default function Stars({rating, totalReviews, size = 14} : {
                     className={cn('text-primary bg-transparent transition-all duration-300 ease-in-out', rating >= star ? "fill-primary" : "fill-transparent")}>
                 </Star>
             ))}
-            {totalReviews &&    (
+
+            {totalReviews ?    (
                 <span className='text-secondary-foreground font-bold text-sm ml-2'>
                     {totalReviews} reviews
                 </span>
-                )
+                ) : null
             }
         </div>
     )

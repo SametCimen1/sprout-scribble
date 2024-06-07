@@ -1,3 +1,4 @@
+import { boolean } from 'drizzle-orm/pg-core';
 import {create} from 'zustand';
 import {persist} from 'zustand/middleware'
 
@@ -20,7 +21,9 @@ export type CartState = {
     setCheckoutProgress: (val: "cart-page" | "payment-page" | "confirmation-page" ) => void
     addToCart: (item: CartItem) => void
     removeFromCart: (item: CartItem) => void
-
+    clearCart: () => void
+    cartOpen: boolean,
+    setCartOpen: (val: boolean) =>void
 }
 
 export const useCartStore = create<CartState>()(
@@ -28,6 +31,9 @@ export const useCartStore = create<CartState>()(
     (set) => ({
     cart: [],
     checkoutProgress: "cart-page",
+    clearCart: () => set({ cart: [] }),
+    cartOpen: false,
+    setCartOpen: (val) => set({cartOpen:val}),
     setCheckoutProgress: (val) => set((state) => ({checkoutProgress: val})),
     addToCart: (item) => set((state) => {
         const existingItem = state.cart.find(

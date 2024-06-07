@@ -3,21 +3,36 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { db } from "@/server"
 import Google from "next-auth/providers/google"
 import Github from "next-auth/providers/github"
-import Credentials from "next-auth/providers/credentials" 
+import Credentials from "next-auth/providers/credentials"
 import bcrypt from 'bcrypt'
 import { LoginSchema } from "@/types/login-schema"
 import { eq } from "drizzle-orm"
 import { accounts, users } from "./schema"
+import Stripe from "stripe"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
     secret:process.env.AUTH_SECRET!,
     adapter: DrizzleAdapter(db),
     session:{strategy:'jwt'},
+    events:{
+        createUser: async({user}) => {
+            const stripe = new Stripe(process.env.STRIPE_SECRET!, {
+                apiVersion: "2024-04-10"
+            })
+            const customer = await stripe.customers.create({
+                email: user.email!,
+                name: user.name!
+            })
+            await db.update(users).set({
+                customerID: customer.id
+            }).where(eq(users.id, user.id!))
+        }
+    },
     callbacks:{
         async session({session, token}){
             if(session && token.sub){
                 session.user.id = token.sub;
-            }  
+            }
             if(session.user && token.role){
                 session.user.role = token.role as string
             }
@@ -61,7 +76,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }),
         Credentials({
             authorize: async(credentials) => {
-                
+
                 const validatedFields = LoginSchema.safeParse(credentials)
 
                 if(validatedFields.success){
@@ -71,7 +86,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                     });
 
                     if(!user || !user.password) return null;
-                    
+
                     const passwordMatch = await bcrypt.compare(password, user.password);
                     if(passwordMatch) return user;
                 }
