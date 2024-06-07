@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm"
 import { type NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 
+// export const config = { api: { bodyParser: false } };
 
 export async function POST(req: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET || "", {
@@ -12,8 +13,9 @@ export async function POST(req: NextRequest) {
   const sig = req.headers.get("stripe-signature") || ""
   const signingSecret = process.env.STRIPE_WEBHOOK_SECRET || ""
 
+  // Read the request body as text
   const reqText = await req.text()
-
+  // Convert the text to a buffer
   const reqBuffer = Buffer.from(reqText)
 
   let event
