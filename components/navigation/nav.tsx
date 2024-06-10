@@ -16,7 +16,9 @@ export default async function Nav(){
                     <ul className='flex  justify-between items-center md:gap-8 gap-4 md:flex-row'>
                         <li className='flex w-40 md:flex-1 lg:w-full'>
                             <Link href='/' aria-label='sprout and scribble logo'>
-                                <Logo />
+                            <span className="cursor-pointer font-semibold text-[#2D2E32] dark:text-[#efefef] text-lg ">
+                                <a href="/">Sprout&Scribble</a>
+                            </span>
                             </Link>
                         </li>
                         <div className='flex items-center gap-4'>
