@@ -1,5 +1,5 @@
 {
-  "name": "sprout-scribble",
+  "name": "Next-store",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -69,14 +69,14 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/node": "20.14.2",
+    "@types/react": "18.3.3",
     "@types/react-dom": "^18",
     "drizzle-kit": "^0.22.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "5.4.5"
   }
 }

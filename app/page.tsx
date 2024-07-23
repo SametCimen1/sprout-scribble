@@ -7,6 +7,7 @@ import { productVariants, variantImages } from "@/server/schema";
 import { db } from "@/server";
 import Algolia from "@/components/products/algolia";
 import ProductTags from "@/components/products/product-tags";
+import {Footer} from "@/components/navigation/footer";
 
 export const revalidate = 60 * 60;
 
@@ -18,7 +19,8 @@ export default async function Home() {
       variantTags: true,
       product: true,
     },
-    orderBy: (productVariants, {desc}) => [desc(productVariants.id)]
+    orderBy: (productVariants, {desc}) => [desc(productVariants.id)],
+    limit:6
   })
 
 
@@ -27,6 +29,7 @@ export default async function Home() {
       <Algolia />
       {/* <ProductTags /> */}
       <Products variants = {data}/>
+      <Footer></Footer>
     </main>
   );
 }

@@ -11,18 +11,18 @@ export default async function Nav(){
 
 
         return(
-            <header className=' py-8'>
+            <header className=' py-8 z-50'>
                 <nav className=''>
                     <ul className='flex  justify-between items-center md:gap-8 gap-4 md:flex-row'>
                         <li className='flex w-40 md:flex-1 lg:w-full'>
-                            <Link href='/' aria-label='sprout and scribble logo'>
-                            <span className="cursor-pointer font-semibold text-[#2D2E32] dark:text-[#efefef] text-lg ">
-                                <a href="/">Sprout&Scribble</a>
-                            </span>
+                            <Link href='/' aria-label=' and scribble logo'>
+                                <span className="cursor-pointer font-semibold text-[#2D2E32] dark:text-[#efefef] text-2xl ">
+                                    Next-Store  
+                                </span>
                             </Link>
                         </li>
                         <div className='flex items-center gap-4'>
-                            <li className='relative flex items-center hover:bg-muted'>
+                            <li className='relative flex items-center hover:bg-muted py-1 rounded-md'>
                                 <CartDrawer />
                             </li>
                             {!session ? (

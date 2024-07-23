@@ -126,3 +126,48 @@
 [data-ut-element="button"][data-state="uploading"]::after{
   @apply bg-primary/50
 }
+
+.grid-container{
+  grid-gap: 1.3rem;
+  display: grid;
+  gap: 1.3rem;
+  grid-template-areas: "one two four" "one two four-low";
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 50rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1000px){
+  .grid-container {
+  grid-gap: 13px;
+  display: grid;
+  gap: 13px;
+  grid-template-areas: "one two" "four four-low";
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: repeat(2,1fr);
+  height: 500px;
+  }
+}
+
+.reduce-brightness{
+  background-color: black;
+  opacity: 55%;
+}
+
+.grid-one{
+  grid-area: one
+}
+
+.grid-two{
+  grid-area: two
+}
+
+
+.grid-four{
+  grid-area: four
+}
+
+.grid-four-low{
+  grid-area: four-low
+}
