@@ -50,7 +50,12 @@ export default async function TagPage({params}: {params: {tag:string}}){
 
     return (
         <div>
-            <main className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 lg:grid-cols-3 ">
+             {productArray.length > 0 ?
+            <h1 className="text-lg font-bold">Products Found</h1>
+            :
+            <></>
+            }
+            <main className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 lg:grid-cols-3 mt-5">
                 {productArray.length > 0 ? productArray.map((variant) => (
                     <Link
                         key = {variant.id}

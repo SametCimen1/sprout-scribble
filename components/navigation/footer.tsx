@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export  function Footer(){
     return(
-        <div className="mt-10">
+        <div className="mt-20">
         
             <footer className="rounded-lg  ">
                 <div className="w-full max-w-screen-xl mx-auto md:py-8">

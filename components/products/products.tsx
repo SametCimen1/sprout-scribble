@@ -29,10 +29,10 @@ export default function Products({variants}: ProductTypes){
     return(
         <div className="">
             <Categories />
-            <h2 className="text-xl mt-10 font-semibold">
+            <h2 className="text-xl mt-20 font-semibold">
                 Products
             </h2>
-            <main className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 lg:grid-cols-3 ">
+            <main className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 gap-y-10 lg:grid-cols-3 ">
                 {filtered.map((variant) => (
                     <Link
                         key = {variant.id}
@@ -56,9 +56,15 @@ export default function Products({variants}: ProductTypes){
                         </div>
                     </Link>
                 ))}
+
+                <div>
+                    <Link href= '/products/all'>
+                        <Button variant={'outline'}>Shop all</Button>
+                    </Link>
+                </div>
             </main>
 
-            <div className="hero mt-10">
+            <div className="hero mt-20">
                 <div className="flex">
                     <img className="max-w-[45%]" src = "http://localhost:3000/livingroom.jpg"/>
                     <div className="flex-1 flex justify-center w-1/2 mx-auto flex-col">

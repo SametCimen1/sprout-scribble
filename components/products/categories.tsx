@@ -14,7 +14,7 @@ export default function Categories(){
         },
         {
             url:'/computer.jpg', 
-            text: "Computer"
+            text: "Tech"
         },
         {
             url:'/school.jpg', 
@@ -34,7 +34,7 @@ export default function Categories(){
     }
 
     return (
-        <div>
+        <div className="mt-10">
             <h2 className="text-xl mb-0 font-semibold">
                 Categories
             </h2>

@@ -65,7 +65,7 @@ export default async function Page({params}: {params: {slug:string}}){
                     <div className="flex flex-col flex-1">
                         <h2 className="text-2xl font-bold">{variant?.product.title}</h2>
                         <div>
-                            <ProductType variants={variant.product.productVariants}/>
+                            {/* <ProductType variants={variant.product.productVariants}/> */}
                             <Stars
                                 rating = {reviewAVG}
                                 totalReviews = {variant.product.reviews.length}
