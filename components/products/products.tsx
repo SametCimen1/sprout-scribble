@@ -66,7 +66,7 @@ export default function Products({variants}: ProductTypes){
 
             <div className="hero mt-20">
                 <div className="flex">
-                    <img className="max-w-[45%]" src = "http://localhost:3000/livingroom.jpg"/>
+                    <img className="max-w-[45%]" src = "livingroom.jpg"/>
                     <div className="flex-1 flex justify-center w-1/2 mx-auto flex-col">
                         <div className="w-4/5 m-auto ">
                             <h2 className="font-bold text-2xl">Elevate Your Everyday Life</h2>
