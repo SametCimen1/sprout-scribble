@@ -1,6 +1,6 @@
 import { db } from "@/server";
 import {products, productVariants, variantImages, variantTags } from "@/server/schema";
-import { eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "lucide-react";
@@ -14,16 +14,19 @@ export default async function TagPage({params}: {params: {tag:string}}){
         where: eq(variantTags.tag, params.tag),
         with:{
             productVariants: true 
-        }
+        },
+        orderBy: [desc(variantTags.id)],
     })
 
 
     for(let i = 0; i<variant.length; i++){
         const images = await db.query.variantImages.findFirst({
-            where: eq(variantImages.variantID, Number(variant[i].productVariants.id))
+            where: eq(variantImages.variantID, Number(variant[i].productVariants.id)),
+            orderBy: [desc(variantImages.id)],
         })
         const product = await db.query.products.findFirst({
-            where: eq(products.id, variant[i].productVariants.productID)
+            where: eq(products.id, variant[i].productVariants.productID),
+            orderBy: [desc(products.id)],
         })
 
         const newObj = {
@@ -33,7 +36,6 @@ export default async function TagPage({params}: {params: {tag:string}}){
             productType: variant[i].productVariants.productType,
             price: product?.price,
             title: product?.title,
-
         }
 
         console.log("THE PRODUCT FOUND");
@@ -51,7 +53,7 @@ export default async function TagPage({params}: {params: {tag:string}}){
     return (
         <div>
              {productArray.length > 0 ?
-            <h1 className="text-lg font-bold">Products Found</h1>
+                <h1 className="text-lg font-bold"></h1>
             :
             <></>
             }
@@ -67,9 +69,9 @@ export default async function TagPage({params}: {params: {tag:string}}){
                         <div className="flex justify-between">
                             <div className="font-medium">
                                 <h2>{variant.title}</h2>
-                                <p className="text-sm text-muted-foreground">
+                                {/* <p className="text-sm text-muted-foreground">
                                     {variant.productType}
-                                </p>
+                                </p> */}
                             </div>
                             <div>
                                 {/* <Badge className="text-sm" variant={'secondary'}>

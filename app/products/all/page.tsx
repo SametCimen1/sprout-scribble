@@ -1,6 +1,6 @@
 import { db } from "@/server";
 import {products, productVariants, variantImages, variantTags } from "@/server/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "lucide-react";
@@ -11,7 +11,7 @@ export default async function AllPage({params}: {params: {tag:string}}){
     const productArray = [];
 
     const variant = await db.query.productVariants.findMany({
-
+        orderBy: [desc(variantTags.id)],
     })
 
 
@@ -60,9 +60,9 @@ export default async function AllPage({params}: {params: {tag:string}}){
                         <div className="flex justify-between">
                             <div className="font-medium">
                                 <h2>{variant.title}</h2>
-                                <p className="text-sm text-muted-foreground">
+                                {/* <p className="text-sm text-muted-foreground">
                                     {variant.productType}
-                                </p>
+                                </p> */}
                             </div>
                             <div>
                                 {/* <Badge className="text-sm" variant={'secondary'}>
